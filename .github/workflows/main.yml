@@ -16,7 +16,9 @@ jobs:
       env:
         PIPENV_VENV_IN_PROJECT: '1'
 
-    #    services:
+    services:
+      dynamodb:
+        image: amazon/dynamodb-local
     #      postgres:
     #        image: postgres:10.8
     #        env:
