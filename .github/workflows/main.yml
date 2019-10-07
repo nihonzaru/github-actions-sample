@@ -26,36 +26,42 @@ jobs:
       - name: Install Application dependencies
         run: |
           pipenv install -d
-
-  test:
-    needs: build
-    runs-on: ubuntu-latest
-
-    container:
-      image:  python:3.7.4-slim
-      env:
-        PIPENV_VENV_IN_PROJECT: '1'
-
-    services:
-      dynamodb:
-        image: amazon/dynamodb-local
-
-    steps:
-      - uses: actions/checkout@v1
-      - name: Debug info
-        run: |
-          pwd
-          ls -la
-      - name: Install Global dependencies
-        run: |
-          pip install pipenv==2018.11.26
-      - name: Install Application dependencies
-        run: |
-          pipenv install -d
-      - name: Debug info
-        run: |
-          pwd
-          ls -la
       - name: Test with pytest
         run: |
           pipenv run pytest -v
+      - name: Build docker image
+        run: |
+          docker build .
+
+#  test:
+#    needs: build
+#    runs-on: ubuntu-latest
+#
+#    container:
+#      image:  python:3.7.4-slim
+#      env:
+#        PIPENV_VENV_IN_PROJECT: '1'
+#
+#    services:
+#      dynamodb:
+#        image: amazon/dynamodb-local
+#
+#    steps:
+#      - uses: actions/checkout@v1
+#      - name: Debug info
+#        run: |
+#          pwd
+#          ls -la
+#      - name: Install Global dependencies
+#        run: |
+#          pip install pipenv==2018.11.26
+#      - name: Install Application dependencies
+#        run: |
+#          pipenv install -d
+#      - name: Debug info
+#        run: |
+#          pwd
+#          ls -la
+#      - name: Test with pytest
+#        run: |
+#          pipenv run pytest -v
