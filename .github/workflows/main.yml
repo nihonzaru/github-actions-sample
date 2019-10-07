@@ -32,14 +32,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v1
-      - name: Install dependencies
+      - name: Install Global dependencies
         run: |
           pip install pipenv==2018.11.26
-      - name: Show versions
+      - name: Install Application dependencies
         run: |
-          which -a python
-          python --version
-          which -a pip
-          pip --version
-          which -a pipenv
-          pipenv --version
+          pwd
+          ls -la
+#          pipenv install -d
