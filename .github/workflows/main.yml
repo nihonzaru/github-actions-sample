@@ -35,7 +35,7 @@ jobs:
           whoami
           uname -a
           apt-get update
-          apt-get install pipenv
+          apt-get install pipenv -y
       - name: Show python version
         run: |
           which -a python
