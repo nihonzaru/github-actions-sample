@@ -38,10 +38,11 @@ jobs:
       - uses: actions/checkout@v1
       - name: Build docker image
         run: |
-          export TAG=`echo $GITHUB_REF | sed 's/refs\/heads\///g'`
+          TAG=`echo $GITHUB_REF | sed 's/refs\/heads\///g'`
           docker build -t docker.pkg.github.com/takamatsu/github-actions-sample/python:${TAG} .
       - name: Push docker image to Gihub Package Registry
         run: |
+          TAG=`echo $GITHUB_REF | sed 's/refs\/heads\///g'`
           docker login docker.pkg.github.com -u takamatsu -p ${{ secrets.GITHUB_DEPLOY_TOKEN }}
           docker push docker.pkg.github.com/takamatsu/github-actions-sample/python:${TAG}
 
