@@ -39,13 +39,12 @@ jobs:
       - name: Build docker image
         run: |
           TAG=`echo $GITHUB_REF | sed 's/refs\/heads\///g'`
-          docker build -t docker.pkg.github.com/takamatsu/github-actions-sample/python:${TAG} .
+          docker build -t docker.pkg.github.com/nihonzaru/github-actions-sample/python:${TAG} .
       - name: Push docker image to Gihub Package Registry
         run: |
           TAG=`echo $GITHUB_REF | sed 's/refs\/heads\///g'`
           docker login docker.pkg.github.com -u nihonzaru -p ${{ secrets.GITHUB_DEPLOY_TOKEN }}
-          docker push docker.pkg.github.com/takamatsu/github-actions-sample/python:${TAG}
-
+          docker push docker.pkg.github.com/nihonzaru/github-actions-sample/python:${TAG}
 
 #  test:
 #    needs: build
