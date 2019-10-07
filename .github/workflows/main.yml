@@ -20,20 +20,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@v1
-      - name: Debug info
-        run: |
-          pwd
-          ls -la
       - name: Install Global dependencies
         run: |
           pip install pipenv==2018.11.26
       - name: Install Application dependencies
         run: |
           pipenv install -d
-      - name: Debug info
-        run: |
-          pwd
-          ls -la
 
   test:
     needs: build
@@ -66,4 +58,4 @@ jobs:
           ls -la
       - name: Test with pytest
         run: |
-          python -m pytest -v
+          pipenv run pytest -v
