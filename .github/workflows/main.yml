@@ -30,12 +30,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v1
-      - name: Show OS info
+      - name: Install dependencies
         run: |
-          whoami
-          uname -a
-          apt-get update
-          apt-get install pipenv -y
+          pip install pipenv==2018.11.26
       - name: Show python version
         run: |
           which -a python
