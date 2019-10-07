@@ -33,8 +33,11 @@ jobs:
       - name: Install dependencies
         run: |
           pip install pipenv==2018.11.26
-      - name: Show python version
+      - name: Show versions
         run: |
           which -a python
+          python --version
+          which -a pip
+          pip --version
           which -a pipenv
           pipenv --version
