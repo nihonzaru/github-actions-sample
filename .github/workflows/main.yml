@@ -34,3 +34,25 @@ jobs:
         run: |
           pwd
           ls -la
+
+  test:
+    runs-on: ubuntu-latest
+
+    container:
+      image:  python:3.7.4-slim
+      env:
+        PIPENV_VENV_IN_PROJECT: '1'
+
+    services:
+      dynamodb:
+        image: amazon/dynamodb-local
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Debug info
+        run: |
+          pwd
+          ls -la
+          python --version
+          pip    --version
+          pipenv --version
