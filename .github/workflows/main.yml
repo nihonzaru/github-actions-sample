@@ -33,11 +33,12 @@ jobs:
   test:
     needs: build
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v1
       - name: Build docker image
-      run: |
-        docker build .
+        run: |
+          docker build .
 
 #  test:
 #    needs: build
