@@ -30,3 +30,7 @@ jobs:
       - name: Install Application dependencies
         run: |
           pipenv install -d
+      - name: Debug info
+        run: |
+          pwd
+          ls -la
