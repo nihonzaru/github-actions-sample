@@ -6,7 +6,7 @@ on:
       - master
 
 jobs:
-  container-job:
+  build:
     runs-on: ubuntu-latest
 
     # runs all of the steps inside the specified continer rather than on the VM host.
@@ -32,9 +32,10 @@ jobs:
       - uses: actions/checkout@v1
       - name: Show OS info
         run: |
+          whoami
           uname -a
-          sudo apt-get update
-          sudo apt-get install pipenv
+          apt-get update
+          apt-get install pipenv
       - name: Show python version
         run: |
           which -a python
