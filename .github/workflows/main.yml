@@ -36,45 +36,33 @@ jobs:
 
     steps:
       - uses: actions/checkout@v1
+
       - name: Build docker image
         run: |
           TAG=`echo $GITHUB_REF | sed 's/refs\/heads\///g'`
           docker build -t docker.pkg.github.com/nihonzaru/github-actions-sample/python:${TAG} .
+
+      - name: 'deployment pending'
+        uses: 'deliverybot/deployment-status@master'
+        with:
+          state: 'pending'
+          token: '${{ github.token }}'
+
       - name: Push docker image to Gihub Package Registry
         run: |
           TAG=`echo $GITHUB_REF | sed 's/refs\/heads\///g'`
           docker login docker.pkg.github.com -u nihonzaru -p ${{ secrets.GITHUB_DEPLOY_TOKEN }}
           docker push docker.pkg.github.com/nihonzaru/github-actions-sample/python:${TAG}
 
-#  test:
-#    needs: build
-#    runs-on: ubuntu-latest
-#
-#    container:
-#      image:  python:3.7.4-slim
-#      env:
-#        PIPENV_VENV_IN_PROJECT: '1'
-#
-#    services:
-#      dynamodb:
-#        image: amazon/dynamodb-local
-#
-#    steps:
-#      - uses: actions/checkout@v1
-#      - name: Debug info
-#        run: |
-#          pwd
-#          ls -la
-#      - name: Install Global dependencies
-#        run: |
-#          pip install pipenv==2018.11.26
-#      - name: Install Application dependencies
-#        run: |
-#          pipenv install -d
-#      - name: Debug info
-#        run: |
-#          pwd
-#          ls -la
-#      - name: Test with pytest
-#        run: |
-#          pipenv run pytest -v
+      - name: 'deployment success'
+        if: success()
+        uses: 'deliverybot/deployment-status@master'
+        with:
+          state: 'success'
+          token: '${{ github.token }}'
+      - name: 'deployment failure'
+        if: failure()
+        uses: 'deliverybot/deployment-status@master'
+        with:
+          state: 'failure'
+          token: '${{ github.token }}'
