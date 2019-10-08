@@ -46,7 +46,7 @@ jobs:
         uses: 'deliverybot/deployment-status@master'
         with:
           state: 'pending'
-          token: '${{ github.token }}'
+          token: '${{ GITHUB_DEPLOY_TOKEN }}'
 
       - name: Push docker image to Gihub Package Registry
         run: |
@@ -59,10 +59,10 @@ jobs:
         uses: 'deliverybot/deployment-status@master'
         with:
           state: 'success'
-          token: '${{ github.token }}'
+          token: '${{ GITHUB_DEPLOY_TOKEN }}'
       - name: 'deployment failure'
         if: failure()
         uses: 'deliverybot/deployment-status@master'
         with:
           state: 'failure'
-          token: '${{ github.token }}'
+          token: '${{ GITHUB_DEPLOY_TOKEN }}'
