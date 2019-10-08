@@ -36,38 +36,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@v1
-
-      - name: 'use node 8.x'
-        uses: actions/setup-node@v1
-        with:
-          node-version: 8.x
-
       - name: Build docker image
         run: |
           TAG=`echo $GITHUB_REF | sed 's/refs\/heads\///g'`
           docker build -t docker.pkg.github.com/nihonzaru/github-actions-sample/python:${TAG} .
-
-      - name: 'deployment pending'
-        uses: 'deliverybot/status@master'
-        with:
-          state: 'pending'
-          token: '${{ secrets.GITHUB_DEPLOY_TOKEN }}'
-
       - name: Push docker image to Gihub Package Registry
         run: |
           TAG=`echo $GITHUB_REF | sed 's/refs\/heads\///g'`
           docker login docker.pkg.github.com -u nihonzaru -p ${{ secrets.GITHUB_DEPLOY_TOKEN }}
           docker push docker.pkg.github.com/nihonzaru/github-actions-sample/python:${TAG}
-
-      - name: 'deployment success'
-        if: success()
-        uses: 'deliverybot/status@master'
-        with:
-          state: 'success'
-          token: '${{ secrets.GITHUB_DEPLOY_TOKEN }}'
-      - name: 'deployment failure'
-        if: failure()
-        uses: 'deliverybot/status@master'
-        with:
-          state: 'failure'
-          token: '${{ secrets.GITHUB_DEPLOY_TOKEN }}'
