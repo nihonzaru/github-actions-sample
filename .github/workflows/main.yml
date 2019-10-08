@@ -37,6 +37,11 @@ jobs:
     steps:
       - uses: actions/checkout@v1
 
+      - name: 'use node 8.x'
+        uses: actions/setup-node@v1
+        with:
+          node-version: 8.x
+
       - name: Build docker image
         run: |
           TAG=`echo $GITHUB_REF | sed 's/refs\/heads\///g'`
