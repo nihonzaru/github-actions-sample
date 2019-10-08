@@ -43,7 +43,7 @@ jobs:
           docker build -t docker.pkg.github.com/nihonzaru/github-actions-sample/python:${TAG} .
 
       - name: 'deployment pending'
-        uses: 'deliverybot/deployment-status@master'
+        uses: 'deliverybot/status@master'
         with:
           state: 'pending'
           token: '${{ secrets.GITHUB_DEPLOY_TOKEN }}'
@@ -56,13 +56,13 @@ jobs:
 
       - name: 'deployment success'
         if: success()
-        uses: 'deliverybot/deployment-status@master'
+        uses: 'deliverybot/status@master'
         with:
           state: 'success'
           token: '${{ secrets.GITHUB_DEPLOY_TOKEN }}'
       - name: 'deployment failure'
         if: failure()
-        uses: 'deliverybot/deployment-status@master'
+        uses: 'deliverybot/status@master'
         with:
           state: 'failure'
           token: '${{ secrets.GITHUB_DEPLOY_TOKEN }}'
